@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  console.log('%c [ App ]-6', 'font-size:13px; background:#06EE8D; color:#2f3656;', process.env.REACT_APP_API_URL)
   return (
     <div className="App">
       <header className="App-header">
