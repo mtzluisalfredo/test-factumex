@@ -1,9 +1,9 @@
-import type { State } from "./types";
+import type { DeepPartial, State } from './types';
 
-import { stateAuth as defaultState } from "./context";
+import { stateAuth as defaultState } from './context';
 
 export type Action = {
-  type: "INIT" | "UPDATE";
+  type: 'INIT' | 'UPDATE';
   payload: DeepPartial<State>;
 };
 
@@ -13,10 +13,10 @@ function reducer(state: State, action: Action): State {
   let intermediate: State = {};
 
   switch (type) {
-    case "INIT":
+    case 'INIT':
       intermediate = defaultState();
       break;
-    case "UPDATE":
+    case 'UPDATE':
       intermediate = {
         ...state,
         ...payload,

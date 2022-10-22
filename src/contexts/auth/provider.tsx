@@ -4,8 +4,7 @@ import { useReducer } from 'react';
 import Context, { stateAuth as defaultState } from './context';
 import reducer from './reducer';
 
-import type { State } from './types';
-
+import type { DeepPartial, State } from './types';
 
 function ProviderAuth({ children }: { children: ReactNode }) {
   const [stateAuth, dispatch] = useReducer(reducer, defaultState());
@@ -14,7 +13,7 @@ function ProviderAuth({ children }: { children: ReactNode }) {
     dispatch({ type: 'UPDATE', payload });
   };
 
-  const value = {
+  const value: any = {
     stateAuth,
     setStateAuth,
   };
