@@ -3,7 +3,7 @@ import type { DeepPartial, State } from './types';
 import { stateAuth as defaultState } from './context';
 
 export type Action = {
-  type: 'INIT' | 'UPDATE';
+  type: 'INIT' | 'UPDATE' | 'SET_USER';
   payload: DeepPartial<State>;
 };
 
@@ -15,6 +15,12 @@ function reducer(state: State, action: Action): State {
   switch (type) {
     case 'INIT':
       intermediate = defaultState();
+      break;
+    case 'SET_USER':
+      intermediate = {
+        ...state,
+        user: payload
+      };
       break;
     case 'UPDATE':
       intermediate = {
