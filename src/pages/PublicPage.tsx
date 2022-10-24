@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function PublicPage() {
-  return (
-    <div>PublicPage</div>
-  )
+  return <div>PublicPage</div>;
 }
 
-export default PublicPage
+export default PublicPage;

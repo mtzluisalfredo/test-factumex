@@ -1,10 +1,15 @@
 {
   "extends": [
-    "airbnb-base",
-    "plugin:prettier/recommended"
+    "airbnb-typescript",
+    "plugin:import/recommended"
   ],
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+},
   "plugins": ["prettier"],
   "rules": {
+    "react/jsx-filename-extension": [0],
+
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -14,13 +19,12 @@
         "ts": "never",
         "tsx": "never"
       }
-    ],
+   ],
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "import/prefer-default-export": "off",
     "react/require-default-props": "off",
     "jsx-a11y/anchor-is-valid": "off",
-    "@next/next/no-img-element": "off",
     "consistent-return": "off",
     "react/prop-types": "off",
     "react-hooks/exhaustive-deps": "off",

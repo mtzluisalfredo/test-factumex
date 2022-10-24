@@ -1,47 +1,90 @@
-import React from 'react';
+import { Center, Flex, Box, Text, Button } from '@chakra-ui/react';
+import { useFormik } from 'formik';
+import { isEqual } from 'lodash';
+import { useState } from 'react';
+
 import { useLocation, useNavigate } from 'react-router';
+import InputSecurity from '../components/InputSecurity';
 import { useAuth } from '../contexts/auth';
+import { SignupSchema } from '../validations/login';
 
 function LoginPage() {
-  let navigate = useNavigate();
-  let location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { signin } = useAuth();
+  const [error, setError] = useState('');
 
-  
+  const from = location.state?.from?.pathname || '/';
 
+  const formik = useFormik({
+    validationSchema: SignupSchema,
+    initialValues: {
+      password: '',
+      user: '',
+    },
+    onSubmit: (values) => {
+      const { user } = values;
+      let useDemo = process.env.REACT_APP_USER;
+      if (useDemo) {
+        useDemo = JSON.parse(`${useDemo}`);
+      }
 
-
-
-  let from = location.state?.from?.pathname || '/';
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    let formData = new FormData(event.currentTarget);
-    let username = formData.get('username') as string;
-
-    signin(username, () => {
-      // Send them back to the page they tried to visit when they were
-      // redirected to the login page. Use { replace: true } so we don't create
-      // another entry in the history stack for the login page.  This means that
-      // when they get to the protected page and click the back button, they
-      // won't end up back on the login page, which is also really nice for the
-      // user experience.
-      navigate(from, { replace: true });
-    });
-  }
+      setError('');
+      if (isEqual(values, useDemo)) {
+        signin(user, () => {
+          navigate(from, { replace: true });
+        });
+      } else {
+        setError('Contraseña y/o usurio incorrecto');
+      }
+    },
+  });
 
   return (
-    <div>
-      <p>You must log in to view the page at {from}</p>
+    <Center width={{ base: '100%' }}>
+      <form onSubmit={formik.handleSubmit}>
+        <Flex
+          alignItems={{ base: 'center' }}
+          justifyContent={{ base: 'center' }}
+          width={{ base: '400px' }}
+          flexDirection='column'
+        >
+          <Box mb='16px' width={{ base: '300px' }}>
+            <Text>Correo electrónico</Text>
+            <InputSecurity
+              id='user'
+              name='user'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.user}
+              placeholder='Usuario'
+            />
+            <Box minH={{ base: '16px' }}>
+              {!!formik.errors.user && <Text color='red'>{formik.errors.user}</Text>}
+            </Box>
+          </Box>
+          <Box mb='16px' width={{ base: '300px' }}>
+            <Text>Contraseña</Text>
+            <InputSecurity
+              id='password'
+              name='password'
+              type='password'
+              onChange={formik.handleChange}
+              value={formik.values.password}
+              placeholder='Contraseña'
+            />
+            <Box minH={{ base: '16px' }}>
+              {!!formik.errors.password && <Text color='red'>{formik.errors.password}</Text>}
+            </Box>
+          </Box>
+          <Button width={{ base: '300px' }} bg='cerulean' color='white' type='submit'>
+            Login
+          </Button>
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username: <input name='username' type='text' />
-        </label>{' '}
-        <button type='submit'>Login</button>
+          <Box minH={{ base: '16px' }}>{!!error && <Text color='red'>{error}</Text>}</Box>
+        </Flex>
       </form>
-    </div>
+    </Center>
   );
 }
 export default LoginPage;

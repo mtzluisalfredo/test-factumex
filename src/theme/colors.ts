@@ -26,8 +26,6 @@ export const colors: any = {
   corduroy: '#5C5E5E',
 };
 
-
 export const gradients: any = {
-  lgLoginCard: 'linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 100%)'
+  lgLoginCard: 'linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 100%)',
 };
-

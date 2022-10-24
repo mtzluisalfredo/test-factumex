@@ -1,6 +1,5 @@
-import type { ReactNode } from 'react';
+import { ReactNode, useEffect, useReducer } from 'react';
 
-import { useReducer } from 'react';
 import Context, { stateAuth as defaultState } from './context';
 import { fakeAuthProvider } from './fakeAuthProvider';
 import reducer from './reducer';
@@ -21,6 +20,7 @@ function ProviderAuth({ children }: { children: ReactNode }) {
   let signin = (newUser: string, callback: VoidFunction) => {
     return fakeAuthProvider.signin(() => {
       setUser(newUser);
+      localStorage.setItem('isAuthenticated', newUser);
       callback();
     });
   };
@@ -28,9 +28,18 @@ function ProviderAuth({ children }: { children: ReactNode }) {
   let signout = (callback: VoidFunction) => {
     return fakeAuthProvider.signout(() => {
       setUser(null);
+      localStorage.removeItem('isAuthenticated');
       callback();
     });
   };
+
+  useEffect(() => {
+    const authenticated = localStorage.getItem('isAuthenticated') || '';
+
+    if (authenticated) {
+      setUser(authenticated);
+    }
+  }, []);
 
   const value: any = {
     stateAuth,

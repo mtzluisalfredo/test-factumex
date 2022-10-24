@@ -1,4 +1,4 @@
-import Layout from './Layout';
 import HeaderPublic from './HeaderPublic';
+import Layout from './Layout';
 
 export { Layout, HeaderPublic };

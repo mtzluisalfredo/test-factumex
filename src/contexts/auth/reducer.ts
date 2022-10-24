@@ -19,7 +19,7 @@ function reducer(state: State, action: Action): State {
     case 'SET_USER':
       intermediate = {
         ...state,
-        user: payload
+        user: payload,
       };
       break;
     case 'UPDATE':

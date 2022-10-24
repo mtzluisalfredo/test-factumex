@@ -1,24 +1,21 @@
-import React from 'react'
+import { Box } from '@chakra-ui/react';
 import { Link, Outlet } from 'react-router-dom';
 import AuthStatus from './AuthStatus';
 
-function Layout() {
-    return (
-        <div>
-          <AuthStatus />
-    
-          <ul>
-            <li>
-              <Link to="/">Public Page</Link>
-            </li>
-            <li>
-              <Link to="/protected">Protected Page</Link>
-            </li>
-          </ul>
-    
-          <Outlet />
-        </div>
-      );
+function Guard() {
+  return (
+    <Box bg='red'>
+      <AuthStatus />
+
+      <ul>
+        <li>
+          <Link to='/employees'>employees Page</Link>
+        </li>
+      </ul>
+
+      <Outlet />
+    </Box>
+  );
 }
 
-export default Layout
+export default Guard;

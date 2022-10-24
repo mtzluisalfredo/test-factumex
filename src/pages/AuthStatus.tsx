@@ -6,6 +6,7 @@ function AuthStatus() {
   let navigate = useNavigate();
   let { stateAuth, signout } = useAuth();
   const { user } = stateAuth;
+
   if (!user) {
     return <p>You are not logged in.</p>;
   }
