@@ -84,7 +84,9 @@ function Upload() {
           <Button onClick={handleBack} marginX={{ base: '16px' }}>
             Atrás
           </Button>
-          <Flex fontSize={{ base: '40px' }}>{`${currentFile + 1} / ${filesPreview.length}`}</Flex>
+          <Flex fontSize={{ base: '40px' }}>{`${currentFile ? currentFile + 1 : 0} / ${
+            filesPreview.length
+          }`}</Flex>
           <Button onClick={handleNext} marginX={{ base: '16px' }}>
             Siguinete
           </Button>
