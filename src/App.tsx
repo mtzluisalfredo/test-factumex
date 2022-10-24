@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components';
 import { useAuth } from './contexts/auth';
-import { LoginPage, ProtectedPage, RequireAuth, UploadPage } from './pages';
+import { LoginPage, Employees, RequireAuth, UploadPage } from './pages';
 import WithAuth from './pages/WithAuth';
 
 export default function App() {
@@ -40,7 +40,7 @@ export default function App() {
             path='/employees'
             element={
               <RequireAuth>
-                <ProtectedPage />
+                <Employees />
               </RequireAuth>
             }
           />
