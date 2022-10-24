@@ -50,8 +50,8 @@ function LoginPage() {
           flexDirection='column'
         >
           <Box mb='16px' width={{ base: '300px' }}>
-            <Text>Correo electrónico</Text>
             <InputSecurity
+              label='Correo electrónico'
               id='user'
               name='user'
               type='text'
@@ -64,8 +64,8 @@ function LoginPage() {
             </Box>
           </Box>
           <Box mb='16px' width={{ base: '300px' }}>
-            <Text>Contraseña</Text>
             <InputSecurity
+              label='Contraseña'
               id='password'
               name='password'
               type='password'

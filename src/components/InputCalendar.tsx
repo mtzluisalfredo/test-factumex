@@ -1,38 +1,50 @@
 import { useState } from 'react';
-import 'react-modern-calendar-datepicker/lib/DatePicker.css';
-import DatePicker from 'react-modern-calendar-datepicker';
+import { chakra, Flex, Text } from '@chakra-ui/react';
+import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
+import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
+import moment from 'moment';
 
-const InputCalendar = () => {
+const Calendar = chakra('input', {
+  baseStyle: {
+    border: '1px solid',
+    width: '100%',
+    paddingX: '1rem',
+    height: '2.5rem',
+    borderRadius: '0.375rem',
+  },
+});
+
+const InputCalendar = ({ label }: any) => {
   const [selectedDay, setSelectedDay] = useState<any>(null);
+
+  const { year, month, day } = selectedDay || {};
+  console.log('%c [ year ]-11', 'font-size:13px; background:#06EE8D; color:#2f3656;', year);
 
   // render regular HTML input element
   const renderCustomInput = ({ ref }: any) => (
-    <input
+    <Calendar
       readOnly
       ref={ref} // necessary
       placeholder="I'm a custom input"
-      value={selectedDay ? `✅: ${selectedDay?.day}` : ''}
-      style={{
-        textAlign: 'center',
-        padding: '1rem 1.5rem',
-        fontSize: '1.5rem',
-        border: '1px solid #9c88ff',
-        borderRadius: '100px',
-        boxShadow: '0 1.5rem 2rem rgba(156, 136, 255, 0.2)',
-        color: '#9c88ff',
-        outline: 'none',
-      }}
+      value={
+        selectedDay
+          ? `${moment(`${year}/${month}/${day}`, 'YYYY/MM/YY').format('DD/MMMM/YYYY')}`
+          : ''
+      }
       className='my-custom-input-class' // a styling class
     />
   );
 
   return (
-    <DatePicker
-      value={selectedDay}
-      onChange={setSelectedDay}
-      renderInput={renderCustomInput} // render a custom input
-      shouldHighlightWeekends
-    />
+    <Flex flexDirection={{ base: 'column' }} width={{ base: '100%' }}>
+      <Text>{label}</Text>
+      <DatePicker
+        value={selectedDay}
+        onChange={setSelectedDay}
+        renderInput={renderCustomInput} // render a custom input
+        shouldHighlightWeekends
+      />
+    </Flex>
   );
 };
 

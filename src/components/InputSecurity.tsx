@@ -1,20 +1,26 @@
 import type { InputProps } from '@chakra-ui/react';
-import { Input } from '@chakra-ui/react';
+import { Input, Text } from '@chakra-ui/react';
+import { omit } from 'lodash';
 
-function InputSecurity(props: InputProps) {
+function InputSecurity(props: InputProps & { label?: string }) {
+  const { label } = props;
+  const styleProps = omit(props, ['label']);
   return (
-    <Input
-      {...props}
-      onCopy={(event) => {
-        event.preventDefault();
-      }}
-      onCut={(event) => {
-        event.preventDefault();
-      }}
-      onPaste={(event) => {
-        event.preventDefault();
-      }}
-    />
+    <>
+      <Text>{label}</Text>
+      <Input
+        {...styleProps}
+        onCopy={(event) => {
+          event.preventDefault();
+        }}
+        onCut={(event) => {
+          event.preventDefault();
+        }}
+        onPaste={(event) => {
+          event.preventDefault();
+        }}
+      />
+    </>
   );
 }
 

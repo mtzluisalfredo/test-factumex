@@ -1,9 +1,7 @@
-import AuthStatus from './AuthStatus';
-import Guard from './Guard';
-import LoginPage from './LoginPage';
+import Login from './Login';
 import Employees from './Employees';
-import PublicPage from './PublicPage';
-import RequireAuth from './RequireAuth';
-import UploadPage from './UploadPage';
 
-export { AuthStatus, UploadPage, Guard, LoginPage, Employees, PublicPage, RequireAuth };
+import RequireAuth from './RequireAuth';
+import Upload from './Upload';
+
+export { Upload, Login, Employees, RequireAuth };

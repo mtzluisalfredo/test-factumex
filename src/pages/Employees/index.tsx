@@ -1,10 +1,11 @@
-import { Box, Flex, Input, Text } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { columns } from './columns';
 import useFetch from 'use-http';
 import { Table } from '../../components';
 import { chunk } from 'lodash';
 import { internalSearch } from '../../utils';
+import AddUser from '../../components/AddUser';
 
 function ProtectedPage() {
   const { get } = useFetch();
@@ -38,18 +39,10 @@ function ProtectedPage() {
 
       setPagination((prev: any) => {
         const newDataLength = newData.length;
-        console.log(
-          '%c [ newDataLength ]-41',
-          'font-size:13px; background:#06EE8D; color:#2f3656;',
-          newDataLength,
-        );
+
         const pageSize = newData.length > 10 ? 10 : newDataLength;
         const totalPages = chunk(newData, pageSize).length;
         const itemsPage = chunk(newData, pageSize);
-
-        console.log('itemsPage', itemsPage);
-        console.log('totalPages', totalPages);
-        console.log('pageSize', pageSize);
 
         return {
           ...prev,
@@ -69,16 +62,7 @@ function ProtectedPage() {
 
   return (
     <Box width={{ base: '100%' }}>
-      <Flex
-        alignItems={{ base: 'center' }}
-        marginY={{ base: '40px' }}
-        justifyContent={{ base: 'space-between' }}
-      >
-        <Text fontWeight={{ base: 'bold' }} fontSize={{ base: '40px' }}>
-          Tabla de empleados
-        </Text>
-        <Input onChange={handleSearch} placeholder='Buscar...' maxWidth={{ base: '300px' }} />
-      </Flex>
+      <AddUser onChangeInput={handleSearch} />
       <Table
         columns={columns}
         pagination={pagination}

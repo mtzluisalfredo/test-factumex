@@ -3,11 +3,10 @@ import Paginator from '../Paginator';
 
 function TableIndex(props: any) {
   const { columns, pagination, onChangePage } = props;
-  console.log(
-    '%c [ pagination ]-6',
-    'font-size:13px; background:#06EE8D; color:#2f3656;',
-    pagination.itemsPage[pagination.page],
-  );
+  const items = !!pagination.itemsPage.length
+    ? pagination.itemsPage[pagination.page - 1] || []
+    : [];
+
   return (
     <TableContainer>
       <Table variant='striped' colorScheme='teal'>
@@ -19,29 +18,30 @@ function TableIndex(props: any) {
           </Tr>
         </Thead>
         <Tbody>
-          {!!pagination.itemsPage.length &&
-            (pagination.itemsPage[pagination.page - 1] || []).map((element: any) => {
-              return (
-                <Tr>
-                  {columns.map(({ key, custom = null }: any) => {
-                    if (custom) {
-                      // @ts-ignore
-                      return <Td>{custom(element)}</Td>;
-                    }
-                    return <Td>{element[key]}</Td>;
-                  })}
-                </Tr>
-              );
-            })}
+          {items.map((element: any) => {
+            return (
+              <Tr>
+                {columns.map(({ key, custom = null }: any) => {
+                  if (custom) {
+                    // @ts-ignore
+                    return <Td>{custom(element)}</Td>;
+                  }
+                  return <Td>{element[key]}</Td>;
+                })}
+              </Tr>
+            );
+          })}
         </Tbody>
       </Table>
       <Flex marginY={{ base: '24px' }} justifyContent={{ base: 'center' }}>
-        <Paginator
-          page={pagination.page}
-          totalItems={pagination.totalItems}
-          pageSize={pagination.pageSize}
-          onPageChange={onChangePage}
-        />
+        {!!items.length && (
+          <Paginator
+            page={pagination.page}
+            totalItems={pagination.totalItems}
+            pageSize={pagination.pageSize}
+            onPageChange={onChangePage}
+          />
+        )}
       </Flex>
     </TableContainer>
   );

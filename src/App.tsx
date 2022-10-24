@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components';
 import { useAuth } from './contexts/auth';
-import { LoginPage, Employees, RequireAuth, UploadPage } from './pages';
+import { Login, Employees, RequireAuth, Upload } from './pages';
 import WithAuth from './pages/WithAuth';
 
 export default function App() {
@@ -16,7 +16,7 @@ export default function App() {
             path='/'
             element={
               <WithAuth>
-                <LoginPage />
+                <Login />
               </WithAuth>
             }
           />
@@ -24,7 +24,7 @@ export default function App() {
             path='/login'
             element={
               <WithAuth>
-                <LoginPage />
+                <Login />
               </WithAuth>
             }
           />
@@ -32,7 +32,7 @@ export default function App() {
             path='/upload'
             element={
               <RequireAuth>
-                <UploadPage />
+                <Upload />
               </RequireAuth>
             }
           />

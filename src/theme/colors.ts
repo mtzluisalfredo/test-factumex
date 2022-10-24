@@ -14,7 +14,7 @@ export const colors: any = {
   masala: '#4A4A4A',
   bgWhite: 'rgba(255,255,255,0.6)',
   cerulean: '#05AFF2',
-  apple: '#58BF3B',
+  apple: '#59BF3B',
   capeCod: '#353636',
   gray: '#898989',
   seagull: '#75CDE6',
