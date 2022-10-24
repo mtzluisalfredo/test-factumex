@@ -1,7 +1,16 @@
+import { AtSignIcon, AttachmentIcon, CloseIcon } from '@chakra-ui/icons';
 import { Flex, Button } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
+import { useAuth } from '../contexts/auth';
+import LinkPage from './LinkPage';
 
 function HeaderPublic({ visible }: any) {
+  const { signout } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || '/';
+
   if (!visible) {
     return null;
   }
@@ -10,7 +19,8 @@ function HeaderPublic({ visible }: any) {
     <Flex
       width={{ base: '100%' }}
       paddingX={{ base: '24px', xl: 0 }}
-      bg='brightTurquoise'
+      bg='deepCerulean'
+      color='white'
       minHeight={{ base: '70px' }}
     >
       <Flex
@@ -19,13 +29,26 @@ function HeaderPublic({ visible }: any) {
         marginX={{ base: 'auto' }}
         width={{ base: '100%' }}
       >
-        <Flex>
-          <Link to='/employees'>employees Page</Link>
-          <Link to='/upload'>Upload</Link>
+        <Flex alignItems={{ base: 'center' }}>
+          <LinkPage marginRight={{ base: '40px' }} to='/employees'>
+            <AtSignIcon marginRight={{ base: '4px' }} />
+            Employees
+          </LinkPage>
+          <AttachmentIcon marginRight={{ base: '4px' }} />
+          <LinkPage to='/upload'>Upload</LinkPage>
         </Flex>
         <Flex>
-          <Button colorScheme='teal' variant='link'>
-            Link 1
+          <Button
+            color='white'
+            onClick={() => {
+              signout(() => {
+                navigate(from, { replace: true });
+              });
+            }}
+            variant='link'
+          >
+            <CloseIcon marginRight={{ base: '4px' }} />
+            Cerrar sesión
           </Button>
         </Flex>
       </Flex>

@@ -8,6 +8,8 @@ const UList = chakra('ul', {
 const ItemList = chakra('li', {
   baseStyle: {
     marginX: '8px',
+    cursor: 'pointer',
+    userSelect: 'none',
   },
 });
 
@@ -20,10 +22,6 @@ const Pagination = (props: any) => {
     siblingCount,
     pageSize,
   });
-
-  // if (page === 0 || paginationRange.length < 2) {
-  //   return null;
-  // }
 
   return (
     <UList display='flex' listStyleType='none'>

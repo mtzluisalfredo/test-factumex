@@ -1,4 +1,3 @@
-// https://github.com/mayankshubham/react-pagination/blob/master/src/examples/App.js
 import { useMemo } from 'react';
 export const DOTS = '...';
 
