@@ -9,28 +9,39 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
+import useFetch from 'use-http';
 import Input from '../Input';
 import InputCalendar from '../InputCalendar';
+import { registerValidation } from './validations';
 
-function ModalAddUser({ isOpen, onClose }: any) {
+function ModalAddUser({ isOpen, getEmployees, onClose }: any) {
+  const { post, loading } = useFetch();
   const formik = useFormik({
-    // validationSchema: SignupSchema,
+    validationSchema: registerValidation,
     initialValues: {
       name: '',
       last_name: '',
+      birthday: '',
     },
-    onSubmit: (values) => {
-      console.log('%c [ values ]-21', 'font-size:13px; background:#06EE8D; color:#2f3656;', values);
+    onSubmit: async (values, actions) => {
+      const response = await post('/examen/employees/luisalfredo', {
+        ...values,
+      });
+      if (response?.success) {
+        onClose();
+        getEmployees();
+        actions.resetForm();
+      }
     },
   });
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Modal Title</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
             <Input
               label='Nombre'
               id='name'
@@ -39,6 +50,7 @@ function ModalAddUser({ isOpen, onClose }: any) {
               marginBottom={{ base: '16px' }}
               onChange={formik.handleChange}
               value={formik.values.name}
+              error={formik.errors.name}
               placeholder='Nombre'
             />
             <Input
@@ -49,19 +61,31 @@ function ModalAddUser({ isOpen, onClose }: any) {
               marginBottom={{ base: '16px' }}
               onChange={formik.handleChange}
               value={formik.values.last_name}
+              error={formik.errors.last_name}
               placeholder='Apellido'
             />
 
-            <InputCalendar label='Fecha ' />
-          </form>
-        </ModalBody>
+            <InputCalendar
+              onChange={(value: any) => {
+                formik.setFieldValue('birthday', value);
+              }}
+              error={formik.errors.birthday}
+              label='Fecha de nacimiento'
+              placeholder='Fecha de nacimiento'
+            />
+          </ModalBody>
 
-        <ModalFooter>
-          <Button colorScheme='blue' mr={3} onClick={onClose}>
-            Close
-          </Button>
-          <Button variant='ghost'>Secondary Action</Button>
-        </ModalFooter>
+          <ModalFooter>
+            <Button
+              bg='seagull'
+              isDisabled={loading || !formik.isValid}
+              type='submit'
+              variant='ghost'
+            >
+              Guardar
+            </Button>
+          </ModalFooter>
+        </form>
       </ModalContent>
     </Modal>
   );

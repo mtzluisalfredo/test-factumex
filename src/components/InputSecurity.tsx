@@ -1,9 +1,9 @@
 import type { InputProps } from '@chakra-ui/react';
-import { Input, Text } from '@chakra-ui/react';
+import { Input, Text, Box } from '@chakra-ui/react';
 import { omit } from 'lodash';
 
-function InputSecurity(props: InputProps & { label?: string }) {
-  const { label } = props;
+function InputSecurity(props: InputProps & { label?: string; error?: any }) {
+  const { label, error } = props;
   const styleProps = omit(props, ['label']);
   return (
     <>
@@ -20,6 +20,7 @@ function InputSecurity(props: InputProps & { label?: string }) {
           event.preventDefault();
         }}
       />
+      <Box minH={{ base: '16px' }}>{!!error && <Text color='red'>{error}</Text>}</Box>
     </>
   );
 }

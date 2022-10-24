@@ -1,7 +1,7 @@
 import { Button, Flex, Input, Text, useDisclosure } from '@chakra-ui/react';
 import ModalAddUser from './ModalAddUser';
 
-function index({ onChangeInput }: any) {
+function AddUser({ onChangeInput, getEmployees }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -25,9 +25,9 @@ function index({ onChangeInput }: any) {
           maxWidth={{ base: '300px' }}
         />
       </Flex>
-      <ModalAddUser isOpen={isOpen} onClose={onClose} />
+      <ModalAddUser getEmployees={getEmployees} isOpen={isOpen} onClose={onClose} />
     </>
   );
 }
 
-export default index;
+export default AddUser;

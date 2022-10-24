@@ -62,7 +62,7 @@ function ProtectedPage() {
 
   return (
     <Box width={{ base: '100%' }}>
-      <AddUser onChangeInput={handleSearch} />
+      <AddUser getEmployees={getEmployees} onChangeInput={handleSearch} />
       <Table
         columns={columns}
         pagination={pagination}

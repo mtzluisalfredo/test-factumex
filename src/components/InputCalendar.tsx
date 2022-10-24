@@ -14,24 +14,21 @@ const Calendar = chakra('input', {
   },
 });
 
-const InputCalendar = ({ label }: any) => {
-  const [selectedDay, setSelectedDay] = useState<any>(null);
+const InputCalendar = ({ label, placeholder, onChange }: any) => {
+  const [selectedDay, setSelectedDay] = useState<any>();
 
   const { year, month, day } = selectedDay || {};
-  console.log('%c [ year ]-11', 'font-size:13px; background:#06EE8D; color:#2f3656;', year);
 
-  // render regular HTML input element
   const renderCustomInput = ({ ref }: any) => (
     <Calendar
       readOnly
       ref={ref} // necessary
-      placeholder="I'm a custom input"
+      placeholder={placeholder}
       value={
         selectedDay
           ? `${moment(`${year}/${month}/${day}`, 'YYYY/MM/YY').format('DD/MMMM/YYYY')}`
           : ''
       }
-      className='my-custom-input-class' // a styling class
     />
   );
 
@@ -40,7 +37,14 @@ const InputCalendar = ({ label }: any) => {
       <Text>{label}</Text>
       <DatePicker
         value={selectedDay}
-        onChange={setSelectedDay}
+        onChange={async (value) => {
+          const valueString = `${moment(
+            `${value?.year}/${value?.month}/${value?.day}`,
+            'YYYY/MM/YY',
+          ).format('YYYY/MM/DD')}`;
+          await setSelectedDay(value);
+          await onChange(valueString);
+        }}
         renderInput={renderCustomInput} // render a custom input
         shouldHighlightWeekends
       />

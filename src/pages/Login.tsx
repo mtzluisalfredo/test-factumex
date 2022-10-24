@@ -58,10 +58,8 @@ function LoginPage() {
               onChange={formik.handleChange}
               value={formik.values.user}
               placeholder='Usuario'
+              error={formik.errors.user}
             />
-            <Box minH={{ base: '16px' }}>
-              {!!formik.errors.user && <Text color='red'>{formik.errors.user}</Text>}
-            </Box>
           </Box>
           <Box mb='16px' width={{ base: '300px' }}>
             <InputSecurity
@@ -72,10 +70,8 @@ function LoginPage() {
               onChange={formik.handleChange}
               value={formik.values.password}
               placeholder='Contraseña'
+              error={formik.errors.password}
             />
-            <Box minH={{ base: '16px' }}>
-              {!!formik.errors.password && <Text color='red'>{formik.errors.password}</Text>}
-            </Box>
           </Box>
           <Button width={{ base: '300px' }} bg='cerulean' color='white' type='submit'>
             Login
